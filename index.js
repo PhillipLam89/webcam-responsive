@@ -14,6 +14,9 @@ function main() {
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
      VIDEO.srcObject = signal
+     VIDEO.setAttribute('autoplay', '');
+     VIDEO.setAttribute('muted', '');
+     VIDEO.setAttribute('playsinline', '')
      VIDEO.play()
 
      VIDEO.onloadeddata = function() {
