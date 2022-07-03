@@ -12,7 +12,7 @@ function main() {
   CONTEXT = CANVAS.getContext('2d')
 
 
-  promise = navigator.mediaDevices.getUserMedia({video: true, facingMode: 'user'})
+  promise = navigator.mediaDevices.getUserMedia({video: true})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
      VIDEO.srcObject = signal
@@ -22,7 +22,7 @@ function main() {
 
      VIDEO.onloadeddata = function() {
       handleResize()
-         window.addEventListener('resize', handleResize)
+      window.addEventListener('resize', handleResize)
           // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
     // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
     // const videoTracks = videoStream.getTracks()
