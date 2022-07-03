@@ -37,7 +37,7 @@ function main() {
       cameraFlipButton.addEventListener('click', function () {
         cameraUserFacing = !cameraUserFacing
         const tracks = signal.getTracks()
-
+        VIDEO.stop()
         tracks.forEach(track => track.stop())
         let newpromise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${cameraUserFacing ? 'user' : 'environment'}`}})
         newpromise.then(function(newSignal) {
@@ -46,7 +46,7 @@ function main() {
         VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
         VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
 
-
+        VIDEO.play()
          VIDEO.onloadeddata = function() {
 
          handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
