@@ -4,7 +4,7 @@ let CONTEXT = null
 let SCALER = 0.9 //how much of total width we want the video to cover?
 
 const switchCameraButton = document.querySelector('#flip-camera')
-const streamDeviceInfo = document.querySelector('#streamDeviceInfo')
+const streamDeviceInfo = document.querySelector('#streamDeviceInfo > h6')
 let SIZE =  {x:0,y:0,width:0, height:0}
 let isCameraFacingUser = true
 let CURRENT_SIGNAL = null //global needed to store previous signal since we must STOP all media tracks before switching betweem cameras
@@ -24,6 +24,8 @@ function main() {
      CURRENT_SIGNAL = signal
      const tracks = CURRENT_SIGNAL.getTracks()
     streamDeviceInfo.textContent = tracks[0].label
+
+
      VIDEO.srcObject = signal
      VIDEO.setAttribute('autoplay', '');
      VIDEO.setAttribute('muted', '');
@@ -50,7 +52,7 @@ switchCameraButton.addEventListener('click', function() {
     promise.then(function(newSignal) {
       CURRENT_SIGNAL = newSignal
       VIDEO.srcObject = newSignal
-       streamDeviceInfo.textContent = tracks[0].label
+      streamDeviceInfo.textContent = tracks[0].label
       // VIDEO.setAttribute('autoplay', '');
       // VIDEO.setAttribute('muted', '');
 
