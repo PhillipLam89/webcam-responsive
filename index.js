@@ -37,7 +37,7 @@ function main() {
       cameraFlipButton.addEventListener('click', function () {
         cameraUserFacing = !cameraUserFacing
         const tracks = signal.getTracks()
-        VIDEO.stop()
+
         tracks.forEach(track => track.stop())
         let newpromise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${cameraUserFacing ? 'user' : 'environment'}`}})
         newpromise.then(function(newSignal) {
