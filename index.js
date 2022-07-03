@@ -23,7 +23,7 @@ function main() {
      console.log(signal.getTracks())
      CURRENT_SIGNAL = signal
      const tracks = CURRENT_SIGNAL.getTracks()
-    streamDeviceInfo.textContent = tracks[0].label.slice(0, tracks[0].label.indexOf('('))
+    streamDeviceInfo.textContent = tracks[0].label
      VIDEO.srcObject = signal
      VIDEO.setAttribute('autoplay', '');
      VIDEO.setAttribute('muted', '');
