@@ -10,7 +10,7 @@ function main() {
   CONTEXT = CANVAS.getContext('2d')
 
 
-  let promise = navigator.mediaDevices.getUserMedia({video: { facingMode: 'environment'})
+  let promise = navigator.mediaDevices.getUserMedia({video: { facingMode: 'environment'}})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
      VIDEO.srcObject = signal
