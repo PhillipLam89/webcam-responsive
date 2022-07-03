@@ -1,7 +1,7 @@
 let VIDEO = null  //all-caps elements mean they're GLOBAL
 let CANVAS = null
 let CONTEXT = null
-let SCALER = 1 //how much of total width we want the video to cover?
+let SCALER = 0.9 //how much of total width we want the video to cover?
 
 const switchCameraButton = document.querySelector('#flip-camera')
 
@@ -17,6 +17,8 @@ function main() {
   let promise = navigator.mediaDevices.getUserMedia({video: true})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
+
+
      CURRENT_SIGNAL = signal
      VIDEO.srcObject = signal
      VIDEO.setAttribute('autoplay', '');
@@ -25,6 +27,7 @@ function main() {
      VIDEO.play()
 
      VIDEO.onloadeddata = function() {
+
          handleResize()
          window.addEventListener('resize', handleResize)
         updateCanvas()
@@ -45,6 +48,7 @@ switchCameraButton.addEventListener('click', function() {
       VIDEO.srcObject = newSignal
       VIDEO.setAttribute('autoplay', '');
       VIDEO.setAttribute('muted', '');
+
       VIDEO.setAttribute('playsinline', '')
       VIDEO.play()
 
@@ -61,16 +65,18 @@ function handleResize() {
     CANVAS.height = window.innerHeight
 
       let resizerRatio = SCALER * Math.min(innerWidth/VIDEO.videoWidth, innerHeight/VIDEO.videoHeight)
-    SIZE.width = window.innerWidth //preserves aspect ratio
-    SIZE.height =window.innerHeight
+    SIZE.width = resizerRatio * VIDEO.videoWidth //preserves aspect ratio
+    SIZE.height = resizerRatio * VIDEO.videoHeight
 
-    SIZE.x = 0   //starts at middle of canvas and shifts half its width to left
-    SIZE.y = 0
+    SIZE.x = innerWidth / 2 - SIZE.width / 2   //starts at middle of canvas and shifts half its width to left
+    SIZE.y = innerHeight / 2 - SIZE.height / 2
+
       //starts at middle of canvas and shifts half its height to top
 }
 
 function updateCanvas() {
-  CONTEXT.drawImage(VIDEO, SIZE.x, SIZE.y, SIZE.width, SIZE.height )
+  var test = CONTEXT.drawImage(VIDEO, SIZE.x, SIZE.y, SIZE.width, SIZE.height )
+
 
 
   requestAnimationFrame(updateCanvas) //will calls this function recursively (60 FPS if possible)
