@@ -21,8 +21,9 @@ function main() {
      VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
 
      VIDEO.onloadeddata = function() {
+      handleResize()
          window.addEventListener('resize', handleResize)
-         handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
+          // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
     // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
     // const videoTracks = videoStream.getTracks()
     // videoTracks.forEach(track => track.stop())
@@ -36,14 +37,14 @@ function main() {
       cameraFlipButton.addEventListener('click', function () {
         cameraUserFacing = !cameraUserFacing
         const tracks = signal.getTracks()
-        console.log(tracks)
+
         tracks.forEach(track => track.stop())
-        promise = navigator.mediaDevices.getUserMedia({video: true, facingMode: [cameraUserFacing ? 'user' : 'environment']})
-        promise.then(function(newSignal) {
+        let newpromise = navigator.mediaDevices.getUserMedia({video: true, facingMode: [cameraUserFacing ? 'user' : 'environment']})
+        newpromise.then(function(newSignal) {
         VIDEO.srcObject = newSignal
-        VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
-        VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
-        VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
+        // VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
+        // VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
+        // VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
 
 
          VIDEO.onloadeddata = function() {
