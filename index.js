@@ -1,13 +1,13 @@
 let VIDEO = null  //all-caps elements mean they're GLOBAL
 let CANVAS = null
 let CONTEXT = null
-let SCALER = 0.9 //how much of total width we want the video to cover?
+let SCALER = 1 //how much of total width we want the video to cover?
 
 const switchCameraButton = document.querySelector('#flip-camera')
 
 let SIZE =  {x:0,y:0,width:0, height:0}
 let isCameraFacingUser = true
-let CURRENT_SIGNAL = null
+let CURRENT_SIGNAL = null //global needed to store previous signal since we must STOP all media tracks before switching betweem cameras
 
 function main() {
   CANVAS = document.querySelector('#myCanvas')
@@ -44,14 +44,14 @@ switchCameraButton.addEventListener('click', function() {
       CURRENT_SIGNAL = newSignal
       VIDEO.srcObject = newSignal
       VIDEO.setAttribute('autoplay', '');
-     VIDEO.setAttribute('muted', '');
-     VIDEO.setAttribute('playsinline', '')
-     VIDEO.play()
+      VIDEO.setAttribute('muted', '');
+      VIDEO.setAttribute('playsinline', '')
+      VIDEO.play()
 
-     VIDEO.onloadeddata = function() {
+      VIDEO.onloadeddata = function() {
          handleResize()
          window.addEventListener('resize', handleResize)
-        updateCanvas()
+         updateCanvas()
      }
     })
 })
@@ -61,11 +61,11 @@ function handleResize() {
     CANVAS.height = window.innerHeight
 
       let resizerRatio = SCALER * Math.min(innerWidth/VIDEO.videoWidth, innerHeight/VIDEO.videoHeight)
-    SIZE.width = resizerRatio * VIDEO.videoWidth //preserves aspect ratio
-    SIZE.height = resizerRatio * VIDEO.videoHeight
+    SIZE.width = window.innerWidth //preserves aspect ratio
+    SIZE.height =window.innerHeight
 
-    SIZE.x = innerWidth / 2 - SIZE.width / 2   //starts at middle of canvas and shifts half its width to left
-    SIZE.y = innerHeight / 2 - SIZE.height / 2
+    SIZE.x = 0   //starts at middle of canvas and shifts half its width to left
+    SIZE.y = 0
       //starts at middle of canvas and shifts half its height to top
 }
 
