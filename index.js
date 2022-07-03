@@ -19,7 +19,7 @@ function main() {
      VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
      VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
      VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
-
+     VIDEO.play()
      VIDEO.onloadeddata = function() {
       handleResize()
       window.addEventListener('resize', handleResize)
