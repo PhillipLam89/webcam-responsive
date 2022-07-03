@@ -30,9 +30,13 @@ function main() {
 
         updateCanvas()
 
+
+
+     }
       cameraFlipButton.addEventListener('click', function () {
         cameraUserFacing = !cameraUserFacing
         const tracks = signal.getTracks()
+        console.log(tracks)
         tracks.forEach(track => track.stop())
         promise = navigator.mediaDevices.getUserMedia({video: true, facingMode: cameraUserFacing ? 'user' : 'environment'})
         promise.then(function(newSignal) {
@@ -43,7 +47,6 @@ function main() {
 
 
          VIDEO.onloadeddata = function() {
-         window.addEventListener('resize', handleResize)
          handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
     // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
     // const videoTracks = videoStream.getTracks()
@@ -55,9 +58,6 @@ function main() {
 
       } )
 })
-
-     }
-
 
   }).catch(function(err) {
     alert('camera error dude' + err)
