@@ -8,18 +8,25 @@
 button{
     position: absolute;
     height: 30px;
-    left: 41%;
+    left: 50%;
     top: 15px;
     padding: 3.25px;
     background: red;
+    transform: translateX(-50%);
 
 
 }
 h6 {
-    position: absolute;
-    top: 55px;
-    left: 41%;
+    width: 120px;
     color: chartreuse;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 900;
+}
+#streamDeviceInfo {
+
+    position: absolute;
+    top: 10%;
+    left: 45%;
+    width: 100%;
+   z-index: 3;
 }
