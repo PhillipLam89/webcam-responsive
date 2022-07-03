@@ -6,13 +6,13 @@ let SCALER = 0.9 //how much of total width we want the video to cover?
 let SIZE =  {x:0,y:0,width:0, height:0}
 let cameraUserFacing = true
 const cameraFlipButton = document.querySelector('#flip-camera')
-let promise = null
+
 function main() {
   CANVAS = document.querySelector('#myCanvas')
   CONTEXT = CANVAS.getContext('2d')
 
 
-  promise = navigator.mediaDevices.getUserMedia({video: true})
+  let promise = navigator.mediaDevices.getUserMedia({video: true})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
      VIDEO.srcObject = signal
