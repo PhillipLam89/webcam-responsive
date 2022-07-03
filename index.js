@@ -38,7 +38,7 @@ function main() {
         const tracks = signal.getTracks()
         console.log(tracks)
         tracks.forEach(track => track.stop())
-        promise = navigator.mediaDevices.getUserMedia({video: true, facingMode: cameraUserFacing ? 'user' : 'environment'})
+        promise = navigator.mediaDevices.getUserMedia({video: true, facingMode: [cameraUserFacing ? 'user' : 'environment']})
         promise.then(function(newSignal) {
         VIDEO.srcObject = newSignal
         VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
