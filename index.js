@@ -34,31 +34,31 @@ function main() {
 
 
      }
-      cameraFlipButton.addEventListener('click', function () {
-        cameraUserFacing = !cameraUserFacing
-        const tracks = signal.getTracks()
+//       cameraFlipButton.addEventListener('click', function () {
+//         cameraUserFacing = !cameraUserFacing
+//         const tracks = signal.getTracks()
 
-        tracks.forEach(track => track.stop())
-        let newpromise = navigator.mediaDevices.getUserMedia({video: true, facingMode: [cameraUserFacing ? 'user' : 'environment']})
-        newpromise.then(function(newSignal) {
-        VIDEO.srcObject = newSignal
-        // VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
-        // VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
-        // VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
-
-
-         VIDEO.onloadeddata = function() {
-         handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
-    // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
-    // const videoTracks = videoStream.getTracks()
-    // videoTracks.forEach(track => track.stop())
+//         tracks.forEach(track => track.stop())
+//         let newpromise = navigator.mediaDevices.getUserMedia({video: true, facingMode: [cameraUserFacing ? 'user' : 'environment']})
+//         newpromise.then(function(newSignal) {
+//         VIDEO.srcObject = newSignal
+//         // VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
+//         // VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
+//         // VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
 
 
-        updateCanvas()
-     }
+//          VIDEO.onloadeddata = function() {
+//          handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
+//     // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
+//     // const videoTracks = videoStream.getTracks()
+//     // videoTracks.forEach(track => track.stop())
 
-      } )
-})
+
+//         updateCanvas()
+//      }
+
+//       } )
+// })
 
   }).catch(function(err) {
     alert('camera error dude' + err)
