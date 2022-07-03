@@ -39,22 +39,22 @@ function main() {
         const tracks = signal.getTracks()
 
         tracks.forEach(track => track.stop())
-        let newpromise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${cameraUserFacing ? 'user' : 'environment'}`}})
-        newpromise.then(function(newSignal) {
+        promise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${cameraUserFacing ? 'user' : 'environment'}`}})
+          promise.then(function(newSignal) {
+        VIDEO = document.createElement('video')
+        VIDEO.id = 'newVideo'
         VIDEO.srcObject = newSignal
         VIDEO.setAttribute('autoplay', ''); //will start streaming from video cam, REQUIRED for iOS
         VIDEO.setAttribute('muted', ''); // REQUIRED for iOS
         VIDEO.setAttribute('playsinline', '') //REQUIRED for iOS
 
-        VIDEO.play()
+
          VIDEO.onloadeddata = function() {
 
          handleResize() // we call handleResize here to to correctly modify our SIZE obj before rendering w/ updateCanvas()
     // const videoStream = navigator.mediaDevices.getUserMedia({video: true})
     // const videoTracks = videoStream.getTracks()
     // videoTracks.forEach(track => track.stop())
-
-            window.addEventListener('resize', handleResize)
         updateCanvas()
      }
 
