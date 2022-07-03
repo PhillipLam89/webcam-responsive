@@ -50,6 +50,7 @@ switchCameraButton.addEventListener('click', function() {
     promise.then(function(newSignal) {
       CURRENT_SIGNAL = newSignal
       VIDEO.srcObject = newSignal
+       streamDeviceInfo.textContent = tracks[0].label
       // VIDEO.setAttribute('autoplay', '');
       // VIDEO.setAttribute('muted', '');
 
