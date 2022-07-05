@@ -13,14 +13,9 @@ function main() {
   CANVAS = document.querySelector('#myCanvas')
   CONTEXT = CANVAS.getContext('2d')
 
-
   let promise = navigator.mediaDevices.getUserMedia({video: true})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
-
-
-
-     console.log(signal.getTracks())
      CURRENT_SIGNAL = signal
      const tracks = CURRENT_SIGNAL.getTracks()
     streamDeviceInfo.textContent = tracks[0].label
@@ -39,7 +34,7 @@ function main() {
         updateCanvas()
      }
   }).catch(function(err) {
-    alert('camera error dude' + err)
+    alert('camera error dude ' + err)
   })
 }
 
@@ -47,7 +42,7 @@ function main() {
 switchCameraButton.addEventListener('click', function() {
   isCameraFacingUser = !isCameraFacingUser
   const tracks = CURRENT_SIGNAL.getTracks()
-  tracks.forEach(track => track.stop())
+  tracks.forEach(track => track.stop()) //we must stop previous video tracks to start a new one (aka switch from front/back cam)
   promise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${isCameraFacingUser ? 'user' : 'environment'}`}})
     promise.then(function(newSignal) {
       CURRENT_SIGNAL = newSignal
