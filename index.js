@@ -22,7 +22,7 @@ function main() {
   CANVAS = document.querySelector('.myCanvas')
   CONTEXT = CANVAS.getContext('2d')
 
-  let promise = navigator.mediaDevices.getUserMedia({video: true})
+  let promise = navigator.mediaDevices.getUserMedia({video: true, audio: true})
   promise.then(function(signal) {
      VIDEO = document.createElement('video')
      CURRENT_SIGNAL = signal
@@ -50,11 +50,19 @@ function main() {
 
 switchCameraButton.addEventListener('click', function() {
   isCameraFacingUser = !isCameraFacingUser
+
+  const canvasEL = document.querySelector('.myCanvas')
+
+
   const tracks = CURRENT_SIGNAL.getTracks()
   tracks.forEach(track => track.stop()) //we must stop previous video tracks to start a new one (aka switch from front/back cam)
-  promise = navigator.mediaDevices.getUserMedia({video: { facingMode: `${isCameraFacingUser ? 'user' : 'environment'}`}})
+  promise = navigator.mediaDevices.getUserMedia({audio: true, video: { facingMode: `${isCameraFacingUser ? 'user' : 'environment'}`}})
     promise.then(function(newSignal) {
+
       CURRENT_SIGNAL = newSignal
+
+
+
       VIDEO.srcObject = newSignal
       streamDeviceInfo.textContent = tracks[0].label
       VIDEO.play()
@@ -92,20 +100,18 @@ takePhotoButton.addEventListener('click', function() {
   if (!isVideoModeOn) {
 
     this.style.background = 'royalblue'
-    this.textContent = 'Video'
+    this.textContent = 'BACK'
     switchCameraButton.classList.add('hidden')
     cancelAnimationFrame(animateFrames)
     cameraShotSound.play()
   }
   else {
     this.style.background = 'forestgreen'
-    this.textContent = 'Take Pic'
+    this.textContent = 'PHOTO'
     switchCameraButton.classList.remove('hidden')
     videoRecordingSound.play()
     setTimeout(() => requestAnimationFrame(updateCanvas), 1500)
   }
-
-
 })
 savePhotoButton.addEventListener('click', function() {
     let data = CANVAS.toDataURL('image/png', 1) //1 will give best image quality
@@ -114,4 +120,25 @@ savePhotoButton.addEventListener('click', function() {
 
     a.download = "myScreenShot.png"
     a.click() //simulates an HTML element being clicked!
+})
+
+const muteSoundIcon = document.querySelector('.mute-sound')
+let isMuted = false
+muteSoundIcon.addEventListener('click', function() {
+   isMuted = !isMuted
+
+   isMuted === false ?  muteSoundIcon.firstChild.setAttribute('class', 'fa-solid fa-microphone')
+                        :
+                        muteSoundIcon.firstChild.setAttribute('class', 'fa-solid fa-microphone-lines-slash')
+
+  if (isMuted) {
+    CURRENT_SIGNAL.getTracks().forEach(track => {
+      if (track.kind === 'audio') track.enabled = false
+    })
+  } else {
+     CURRENT_SIGNAL.getTracks().forEach(track => {
+      if (track.kind === 'audio') track.enabled = true
+    })
+  }
+
 })
