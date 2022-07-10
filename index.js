@@ -55,16 +55,11 @@ switchCameraButton.addEventListener('click', function() {
       CURRENT_SIGNAL = newSignal
       VIDEO.srcObject = newSignal
       streamDeviceInfo.textContent = tracks[0].label
-      // VIDEO.setAttribute('autoplay', '');
-      // VIDEO.setAttribute('muted', '');
-
-      // VIDEO.setAttribute('playsinline', '')
       VIDEO.play()
-
       VIDEO.onloadeddata = function() {
          handleResize()
          window.addEventListener('resize', handleResize)
-         updateCanvas()
+        //  updateCanvas()
      }
     })
 })
@@ -84,11 +79,8 @@ function handleResize() {
 }
 
 function updateCanvas() {
-  var test = CONTEXT.drawImage(VIDEO, SIZE.x, SIZE.y, SIZE.width, SIZE.height )
-
-
-
-  animateFrames = requestAnimationFrame(updateCanvas) //will call this function recursively (60 FPS if possible)
+ CONTEXT.drawImage(VIDEO, SIZE.x, SIZE.y, SIZE.width, SIZE.height )
+  animateFrames = window.requestAnimationFrame(updateCanvas) //will call this function recursively (60 FPS if possible)
                                       // which will allow live stream video updates
 }
 
@@ -107,7 +99,6 @@ takePhotoButton.addEventListener('click', function() {
     this.textContent = 'Take Pic'
     switchCameraButton.classList.remove('hidden')
     videoRecordingSound.play()
-
     setTimeout(function(){requestAnimationFrame(updateCanvas)}, 1000)
   }
 
