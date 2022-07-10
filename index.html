@@ -1,23 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;800&display=swap"
-      rel="stylesheet"/>
-    <link rel="stylesheet" href="styles.css"/>
-    <title>HTML Web Cam</title>
-  </head>
-  <body onload="main()">
-    <canvas class="myCanvas"></canvas>
-    <canvas class="myCanvas photo-canvas hidden"></canvas>
-    <button id="flip-camera">Flip Camera</button>
-    <aside id="streamDeviceInfo" class=""><h6></h6></aside>
-    <div class="take-photo"><p>Take Pic</p></div>
-    <script src="index.js"></script>
-  </body>
-</html>
+*{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+button{
+    position: absolute;
+    height: 30px;
+    left: 50%;
+    top: 15px;
+    padding: 3.25px;
+    background: red;
+    transform: translateX(-50%);
+
+
+}
+h6 {
+    width: 120px;
+    color: chartreuse;
+    font-size: 1rem;
+    font-weight: 900;
+}
+#streamDeviceInfo {
+
+    position: absolute;
+    top: 10%;
+    left: 45%;
+    width: 100%;
+
+   z-index: 3;
+}
+.take-photo {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: forestgreen;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    padding: .35em;
+    cursor: pointer;
+    color: white;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+}
+
+.save-photo {
+    position: absolute;
+    cursor: pointer;
+    bottom: 2.5%;
+    left: 65%;
+    color: white;
+
+    font-weight: 900;
+    transform: translateX(-50%);
+    background-color: red;
+    padding: .5em;
+
+}
