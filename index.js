@@ -2,15 +2,22 @@ let VIDEO = null  //all-caps elements mean they're GLOBAL
 let CANVAS = null
 let CONTEXT = null
 let SCALER = 0.9 //how much of total width we want the video to cover?
+let animateFrames = null
+let isVideoModeOn = true
 
+
+const cameraShotSound = new Audio('./camera-sound.mp3')
+const videoRecordingSound = new Audio('./camera-record.mp3')
 const switchCameraButton = document.querySelector('#flip-camera')
 const streamDeviceInfo = document.querySelector('#streamDeviceInfo > h6')
 let SIZE =  {x:0,y:0,width:0, height:0}
 let isCameraFacingUser = true
 let CURRENT_SIGNAL = null //global needed to store previous signal since we must STOP all media tracks before switching betweem cameras
 
+const takePhotoButton = document.querySelector('.take-photo')
+
 function main() {
-  CANVAS = document.querySelector('#myCanvas')
+  CANVAS = document.querySelector('.myCanvas')
   CONTEXT = CANVAS.getContext('2d')
 
   let promise = navigator.mediaDevices.getUserMedia({video: true})
@@ -34,7 +41,7 @@ function main() {
         updateCanvas()
      }
   }).catch(function(err) {
-    alert('camera error dude ' + err)
+    alert('camera error dude: ' + err)
   })
 }
 
@@ -81,6 +88,28 @@ function updateCanvas() {
 
 
 
-  requestAnimationFrame(updateCanvas) //will calls this function recursively (60 FPS if possible)
+  animateFrames = requestAnimationFrame(updateCanvas) //will call this function recursively (60 FPS if possible)
                                       // which will allow live stream video updates
 }
+
+takePhotoButton.addEventListener('click', function() {
+  isVideoModeOn = !isVideoModeOn
+
+  if (!isVideoModeOn) {
+    this.style.background = 'royalblue'
+    this.textContent = 'Video'
+    switchCameraButton.classList.add('hidden')
+    cancelAnimationFrame(animateFrames)
+    cameraShotSound.play()
+  }
+  else {
+    this.style.background = 'red'
+    this.textContent = 'Take Pic'
+    switchCameraButton.classList.remove('hidden')
+    videoRecordingSound.play()
+
+    setTimeout(function(){requestAnimationFrame(updateCanvas)}, 1000)
+  }
+
+
+})
