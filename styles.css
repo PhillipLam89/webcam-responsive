@@ -4,6 +4,9 @@
     overflow: hidden;
 }
 
+.hidden {
+    display: none !important;
+}
 
 button{
     position: absolute;
@@ -18,7 +21,6 @@ button{
 }
 h6 {
     width: 120px;
-    z-index: 1000;
     color: chartreuse;
     font-size: 1rem;
     font-weight: 900;
@@ -30,4 +32,21 @@ h6 {
     left: 45%;
     width: 100%;
 
+   z-index: 3;
+}
+
+.take-photo {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    padding: .35em;
+    cursor: pointer;
+    color: white;
+    display: grid;
+    place-items: center;
 }
