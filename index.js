@@ -2,19 +2,21 @@ let VIDEO = null  //all-caps elements mean they're GLOBAL
 let CANVAS = null
 let CONTEXT = null
 let SCALER = 0.9 //how much of total width we want the video to cover?
-let animateFrames = null
-let isVideoModeOn = true
 
 
 const cameraShotSound = new Audio('./camera-sound.mp3')
 const videoRecordingSound = new Audio('./camera-record.mp3')
 const switchCameraButton = document.querySelector('#flip-camera')
 const streamDeviceInfo = document.querySelector('#streamDeviceInfo > h6')
-let SIZE =  {x:0,y:0,width:0, height:0}
+const SIZE =  {x:0,y:0,width:0, height:0}
+
 let isCameraFacingUser = true
 let CURRENT_SIGNAL = null //global needed to store previous signal since we must STOP all media tracks before switching betweem cameras
+let animateFrames = null
+let isVideoModeOn = true
 
 const takePhotoButton = document.querySelector('.take-photo')
+const savePhotoButton = document.querySelector('.save-photo')
 
 function main() {
   CANVAS = document.querySelector('.myCanvas')
@@ -29,10 +31,10 @@ function main() {
 
 
      VIDEO.srcObject = signal
-     VIDEO.setAttribute('autoplay', '');
-     VIDEO.setAttribute('muted', '');
-     VIDEO.setAttribute('playsinline', '')
-     VIDEO.play()
+     VIDEO.setAttribute('autoplay', '')  //these 3 lines are needed for iPhones to work
+     VIDEO.setAttribute('muted', '') //these 3 lines are needed for iPhones to work
+     VIDEO.setAttribute('playsinline', '') //these 3 lines are needed for iPhones to work
+     VIDEO.play() // play method MUST be called for mobile to work, desktop isn't neccessary
 
      VIDEO.onloadeddata = function() {
 
@@ -59,7 +61,7 @@ switchCameraButton.addEventListener('click', function() {
       VIDEO.onloadeddata = function() {
          handleResize()
          window.addEventListener('resize', handleResize)
-        //  updateCanvas()
+        //  updateCanvas()  we do NOT need to call updateCanvas() since VIDEO is already calling it previously
      }
     })
 })
@@ -88,6 +90,7 @@ takePhotoButton.addEventListener('click', function() {
   isVideoModeOn = !isVideoModeOn
 
   if (!isVideoModeOn) {
+
     this.style.background = 'royalblue'
     this.textContent = 'Video'
     switchCameraButton.classList.add('hidden')
@@ -95,12 +98,20 @@ takePhotoButton.addEventListener('click', function() {
     cameraShotSound.play()
   }
   else {
-    this.style.background = 'red'
+    this.style.background = 'forestgreen'
     this.textContent = 'Take Pic'
     switchCameraButton.classList.remove('hidden')
     videoRecordingSound.play()
-    setTimeout(function(){requestAnimationFrame(updateCanvas)}, 1000)
+    setTimeout(() => requestAnimationFrame(updateCanvas), 1500)
   }
 
 
+})
+savePhotoButton.addEventListener('click', function() {
+    let data = CANVAS.toDataURL('image/png', 1) //1 will give best image quality
+    let a = document.createElement("a")
+    a.href = data
+
+    a.download = "myScreenShot.png"
+    a.click() //simulates an HTML element being clicked!
 })
