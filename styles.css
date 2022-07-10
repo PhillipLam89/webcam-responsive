@@ -14,7 +14,7 @@ button{
     left: 50%;
     top: 15px;
     padding: 3.25px;
-    background: red;
+    background: rgb(196, 235, 40);
     transform: translateX(-50%);
 
 
@@ -24,6 +24,13 @@ h6 {
     color: chartreuse;
     font-size: 1rem;
     font-weight: 900;
+}
+
+#flip-camera {
+ width: 100px;
+ padding: 1em;
+ line-height: 0;
+
 }
 #streamDeviceInfo {
 
@@ -36,13 +43,13 @@ h6 {
 }
 .take-photo {
     position: absolute;
-    bottom: 2%;
+    bottom: 1.6%;
     left: 50%;
     transform: translateX(-50%);
     background-color: forestgreen;
     border-radius: 50%;
-    height: 75px;
-    width: 75px;
+    height: 65px;
+    width: 65px;
     padding: .35em;
     cursor: pointer;
     color: white;
@@ -63,4 +70,16 @@ h6 {
     background-color: red;
     padding: .45em;
 
+}
+
+.myCanvas {
+    transition: 2s;
+}
+
+.mute-sound {
+    font-size: 2rem;
+    position: absolute;
+    top: 2%;
+    left: 25%;
+    cursor: pointer;
 }
